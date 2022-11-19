@@ -21,7 +21,7 @@ public class CradSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         Debug.Log("OnDrop");
         if(eventData.pointerDrag != null){
             eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
-            Sprite BigCard = Resources.Load<Sprite>("Sprites/"+eventData.pointerDrag.GetComponent<Image>().sprite.name + " big");
+            Sprite BigCard = Resources.Load<Sprite>("Sprites/" + eventData.pointerDrag.GetComponent<Image>().sprite.name + " big");
             eventData.pointerDrag.GetComponent<Image>().sprite = BigCard;
             eventData.pointerDrag.GetComponent<RectTransform>().sizeDelta = new Vector2(230, 130); 
         }
