@@ -5,16 +5,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Card : MonoBehaviour, IPointerDownHandler{
+public class Card : MonoBehaviour, /*IPointerDownHandler, IPointerUpHandler,*/ IPointerClickHandler{
     protected int atk;
     protected int dod;
     protected int arm;
+    protected bool cheked;
     Card()
     {
-        //string CardName = this.GetComponent<Image>().sprite.name;
         atk = 0;
         dod = 0;
         arm = 0;
+        cheked = false;
     }
     void SetInfo()
     {
@@ -24,15 +25,29 @@ public class Card : MonoBehaviour, IPointerDownHandler{
         arm = (int)Char.GetNumericValue(CardName[2]);
         Debug.Log(atk + " " + dod + " " + arm);
     }
-    public void OnPointerDown(PointerEventData eventData)
+    /*public void OnPointerDown(PointerEventData pointerEventData)
     {
         GetComponent<CanvasGroup>().alpha = .6f;
+        Debug.Log("clicked");
+    }
+    public void OnPointerUp(PointerEventData pointerEventData)
+    {
+        GetComponent<CanvasGroup>().alpha = 1f;
+    }*/
+    public void OnPointerClick(PointerEventData pointerEventData)
+    {
+        cheked = !cheked;
     }
     void Awake()
     {
+        SpriteRenderer sprite;
+        sprite = GetComponent<SpriteRenderer>();
         SetInfo();
     }
     void Update(){
-        
+        if (cheked)
+            GetComponent<CanvasGroup>().alpha = .6f;
+        else
+            GetComponent<CanvasGroup>().alpha = 1f;
     }
 }
