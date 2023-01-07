@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Match : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -14,5 +15,11 @@ public class Match : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void CardsFight(Card playerCard, Card enemyCard)
+    {
+
+
     }
 }
