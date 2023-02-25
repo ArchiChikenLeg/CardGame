@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Play : MonoBehaviour, IPointerDownHandler {
 
-    //костыль исправь потом на клик вмесато нажатия
+    //костыль исправь потом на клик вместо нажатия
     public void OnPointerDown(PointerEventData eventData)
     {
         SceneManager.LoadScene(1, LoadSceneMode.Single);
