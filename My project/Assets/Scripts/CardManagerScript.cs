@@ -6,11 +6,28 @@ public struct SCard
 {
     public Sprite Img;
     public int atk, def;
+    public bool IsAlive
+    {
+        get
+        {
+            return def > 0;
+        }
+    }
+    public bool CanAttack;
     public SCard(string ImgPath)
     {
         Img = Resources.Load<Sprite>(ImgPath);
-        atk = (int)ImgPath[8];
-        def = (int)ImgPath[10];
+        atk = ImgPath[8] - '0';
+        def = ImgPath[10] - '0';
+        CanAttack = false;
+    }
+    public void ChangeAttackState(bool can)
+    {
+        CanAttack = can;
+    }
+    public void GetDamage(int dmg)
+    {
+        def -= dmg;
     }
 }
 
