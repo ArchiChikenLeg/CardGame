@@ -26,5 +26,9 @@ public class CardManagerScript : MonoBehaviour
         CardManager.AllCards.Add(new SCard("Sprites/221Perevertsh"));
         CardManager.AllCards.Add(new SCard("Sprites/224BabaYaga"));
         CardManager.AllCards.Add(new SCard("Sprites/224ChertovaDama"));
+        CardManager.AllCards.Add(new SCard("Sprites/224ChertovaDama"));
+        CardManager.AllCards.Add(new SCard("Sprites/224ChertovaDama"));
+        CardManager.AllCards.Add(new SCard("Sprites/224ChertovaDama"));
+        CardManager.AllCards.Add(new SCard("Sprites/224ChertovaDama"));
     }
 }

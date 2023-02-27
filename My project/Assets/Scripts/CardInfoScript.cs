@@ -12,7 +12,8 @@ public class CardInfoScript : MonoBehaviour
     public void HideCardInfo(SCard card)
     {
         SelfCard = card;
-        Img.sprite = null;
+        Img.sprite = Resources.Load<Sprite>("Sprites/Card_Back");
+        Img.preserveAspect = true;
     }
 
     public void ShowCardInfo(SCard card)
@@ -25,6 +26,6 @@ public class CardInfoScript : MonoBehaviour
 
     private void Start()
     {
-        ShowCardInfo(CardManager.AllCards[transform.GetSiblingIndex()]);
+        //ShowCardInfo(CardManager.AllCards[transform.GetSiblingIndex()]);
     }
 }

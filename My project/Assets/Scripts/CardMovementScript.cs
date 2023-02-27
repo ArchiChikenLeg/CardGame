@@ -9,17 +9,19 @@ public class CardMovementScript : MonoBehaviour, IBeginDragHandler, IDragHandler
     Vector3 offset;
     public Transform DefaultParent, DefaultTempCardParent;
     GameObject TempCardGO;
+    GameManagerScript GameManager;
     public bool IsDraggable;
 
     void Awake() {
         MainCamera = Camera.allCameras[0];
         TempCardGO = GameObject.Find("TempCardGO");
+        GameManager = FindObjectOfType<GameManagerScript>();
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
         offset=transform.position - MainCamera.ScreenToWorldPoint(eventData.position);
         DefaultParent = DefaultTempCardParent = transform.parent;
-        IsDraggable = DefaultParent.GetComponent<DropPlaceScript>().Type == FieldType.SELF_HAND;
+        IsDraggable = DefaultParent.GetComponent<DropPlaceScript>().Type == FieldType.SELF_HAND && GameManager.IsPlayerTurn;
         if (!IsDraggable)
             return;
         TempCardGO.transform.SetParent(DefaultParent);
