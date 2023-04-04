@@ -7,12 +7,14 @@ public class AttackedCardScript : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
-        CardInfoScript card = eventData.pointerDrag.GetComponent<CardInfoScript>();
-        if (card && transform.parent == GetComponent<CardMovementScript>().GameManager.EnemyField && card.SelfCard.CanAttack)
+        if (!GameManagerScript.Instance.IsPlayerTurn)
+            return;
+        CardController card = eventData.pointerDrag.GetComponent<CardController>();
+        if (card && transform.parent == GetComponent<CardMovementScript>().GameManager.EnemyField && card.Card.CanAttack)
         {
-            card.SelfCard.ChangeAttackState(false);
+            card.Card.ChangeAttackState(false);
 
-            GetComponent<CardMovementScript>().GameManager.CardsFight(card, GetComponent<CardInfoScript>());
+            GetComponent<CardMovementScript>().GameManager.CardsFight(card, GetComponent<CardController>());
         }
     }
 }

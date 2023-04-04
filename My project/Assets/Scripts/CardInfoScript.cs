@@ -6,36 +6,37 @@ using TMPro;
 
 public class CardInfoScript : MonoBehaviour
 {
-    public SCard SelfCard;
+    public CardController CC;
+    //public SCard SelfCard;
     public Image Img;
     public TextMeshProUGUI atk, def;
     public GameObject Back;
-    public bool IsPlayer;
+    //public bool IsPlayer;
 
-    public void HideCardInfo(SCard card)
+    public void HideCardInfo()
     {
-        SelfCard = card;
+       // SelfCard = card;
         Back.SetActive(true);
-        IsPlayer = false;
+        //IsPlayer = false;
     }
    
-    public void ShowCardInfo(SCard card, bool isPlayer)
+    public void ShowCardInfo()
     {
-        IsPlayer = isPlayer;
-        SelfCard = card;
+       // IsPlayer = isPlayer;
+       // SelfCard = card;
 
         Back.SetActive(false); 
-        Img.sprite = card.Img;
+        Img.sprite = CC.Card.Img;
         Img.preserveAspect = true;
 
-        atk.text = SelfCard.atk.ToString();
-        def.text = SelfCard.def.ToString();
+        atk.text = CC.Card.atk.ToString();
+        def.text = CC.Card.def.ToString();
     }
 
     public void RefreshData()
     {
-        atk.text = SelfCard.atk.ToString();
-        def.text = SelfCard.def.ToString();
+        atk.text = CC.Card.atk.ToString();
+        def.text = CC.Card.def.ToString();
     }
 
 

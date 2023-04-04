@@ -25,6 +25,7 @@ public class Game
 
 public class GameManagerScript : MonoBehaviour
 {
+    public static GameManagerScript Instance;
     public Game CurrentGame;
     public Transform EnemyHand, PlayerHand,
                      EnemyField, PlayerField;
@@ -33,10 +34,15 @@ public class GameManagerScript : MonoBehaviour
     public TextMeshProUGUI TurnTimeTxt;
     public Button EndTurnBtn;
 
-    public List<CardInfoScript> PlayerHandCards = new List<CardInfoScript>(),
-                                EnemyHandCards = new List<CardInfoScript>(),
-                                PlayerFieldCards = new List<CardInfoScript>(),
-                                EnemyFieldCards = new List<CardInfoScript>();
+    public List<CardController> PlayerHandCards = new List<CardController>(),
+                                EnemyHandCards = new List<CardController>(),
+                                PlayerFieldCards = new List<CardController>(),
+                                EnemyFieldCards = new List<CardController>();
+
+    private void Awake() {
+        if (Instance == null)
+            Instance = this;
+    }
     public bool IsPlayerTurn
     {
         get
@@ -64,22 +70,23 @@ public class GameManagerScript : MonoBehaviour
     {
         if (deck.Count == 0)
             return;
-        SCard card = deck[0];
-        GameObject cardGO = Instantiate(CardPref, hand, false);
-        if (hand == EnemyHand)
-        {
-            cardGO.GetComponent<CardInfoScript>().HideCardInfo(card);
-            EnemyHandCards.Add(cardGO.GetComponent<CardInfoScript>());
-        }
-        else
-        {
-            cardGO.GetComponent<CardInfoScript>().ShowCardInfo(card, true);
-            PlayerHandCards.Add(cardGO.GetComponent<CardInfoScript>());
-            cardGO.GetComponent<AttackedCardScript>().enabled = false;
-        }
+        CreateCardPref(deck[0], hand);
             
 
         deck.RemoveAt(0);
+    }
+
+    void CreateCardPref(SCard card, Transform hand)
+    {
+        GameObject cardGO = Instantiate(CardPref, hand, false);
+        CardController cardC = cardGO.GetComponent<CardController>();
+
+        cardC.Init(card, hand == PlayerHand);
+
+        if(cardC.IsPlayerCard)
+            PlayerHandCards.Add(cardC);
+        else
+            EnemyHandCards.Add(cardC);
     }
 
     IEnumerator TurnFunc()
@@ -113,25 +120,25 @@ public class GameManagerScript : MonoBehaviour
         ChangeTurn();
     }
 
-    void EnemyTurn(List<CardInfoScript> cards)
+    void EnemyTurn(List<CardController> cards)
     {
         int count = Random.Range(0, cards.Count + 1);
         for(int i=0; i < count; i++)
         {
             if (EnemyFieldCards.Count > 4)
                 return;
-            cards[0].ShowCardInfo(cards[0].SelfCard, false);
+            cards[0].Info.ShowCardInfo();
             cards[0].transform.SetParent(EnemyField);
             EnemyFieldCards.Add(cards[0]);
             EnemyHandCards.Remove(cards[0]);
         }
-        foreach(var activeCard in EnemyFieldCards.FindAll(x=> x.SelfCard.CanAttack))
+        foreach(var activeCard in EnemyFieldCards.FindAll(x=> x.Card.CanAttack))
         {
             if (PlayerFieldCards.Count == 0)
                 return;
             var enemy = PlayerFieldCards[Random.Range(0, PlayerFieldCards.Count)];
             CardsFight(activeCard, enemy);
-            activeCard.SelfCard.ChangeAttackState(false);
+            activeCard.Card.ChangeAttackState(false);
             
         }
     }
@@ -152,30 +159,23 @@ public class GameManagerScript : MonoBehaviour
         GiveCardToHand(CurrentGame.PlayerDeck, PlayerHand);
     }
 
-    public void CardsFight(CardInfoScript playerCard, CardInfoScript enemyCard)
+    public void CardsFight(CardController playerCard, CardController enemyCard)
     {
-        enemyCard.SelfCard.GetDamage(playerCard.SelfCard.atk);
+        enemyCard.Card.GetDamage(playerCard.Card.atk);
 
-        if (!playerCard.SelfCard.IsAlive)
-            DestroyCard(playerCard);
-        else
-            playerCard.RefreshData();
-
-        if (!enemyCard.SelfCard.IsAlive)
-            DestroyCard(enemyCard);
-        else
-            enemyCard.RefreshData();
+        playerCard.CheckForAlive();
+        enemyCard.CheckForAlive();
     }
 
-    void DestroyCard(CardInfoScript card)
-    {
-        card.GetComponent<CardMovementScript>().OnEndDrag(null);
-        if (EnemyFieldCards.Exists(x => x == card))
-            EnemyFieldCards.Remove(card);
+    //void DestroyCard(CardInfoScript card)
+    //{
+    //    card.GetComponent<CardMovementScript>().OnEndDrag(null);
+    //    if (EnemyFieldCards.Exists(x => x == card))
+    //        EnemyFieldCards.Remove(card);
 
-        if (PlayerFieldCards.Exists(x => x == card))
-            PlayerFieldCards.Remove(card);
+    //    if (PlayerFieldCards.Exists(x => x == card))
+    //        PlayerFieldCards.Remove(card);
 
-        Destroy(card.gameObject);
-    }
+    //    Destroy(card.gameObject);
+    //}
 }
