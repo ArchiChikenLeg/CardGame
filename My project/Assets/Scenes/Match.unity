@@ -175,7 +175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b738007516182dc4d931f372de2707c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
 --- !u!114 &44226245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -653,7 +652,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b738007516182dc4d931f372de2707c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 0
 --- !u!114 &835109639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1006,7 +1004,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b738007516182dc4d931f372de2707c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 3
 --- !u!114 &1634134147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1219,6 +1216,7 @@ GameObject:
   - component: {fileID: 1854551498}
   - component: {fileID: 1854551501}
   - component: {fileID: 1854551502}
+  - component: {fileID: 1854551503}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1317,17 +1315,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5c26c21761d8734cbba960caf266023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyHand: {fileID: 44226243}
-  PlayerHand: {fileID: 835109637}
-  EnemyField: {fileID: 1634134145}
-  PlayerField: {fileID: 1943242281}
-  CardPref: {fileID: 6217118206932932284, guid: 6e7397a76d731d44b98ae1e569052949, type: 3}
-  TurnTimeTxt: {fileID: 1038005181}
-  EndTurnBtn: {fileID: 472706956}
-  PlayerHandCards: []
-  EnemyHandCards: []
-  PlayerFieldCards: []
-  EnemyFieldCards: []
+--- !u!114 &1854551503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854551497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad56ddf5b2aaa6f41a4c467ee266a7fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1943242280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1444,4 +1443,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b738007516182dc4d931f372de2707c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
